@@ -1,0 +1,579 @@
+openapi: 3.0.0
+info:
+  description: Headless Content Management System
+  version: "1.0.0"
+  title: Vert.x Headless Content Management
+servers:
+  - url: '{protocol}://{hostname}:{port}'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: https
+      hostname:
+        default: localhost
+        enum:
+          - localhost
+      port:
+        default: '8080'
+        enum:
+          - '8080'
+          - '80'
+          - '8443'
+          - '443'
+tags:
+  - name: Page
+  - name: Language
+  - name: Menu
+  - name: Section
+  - name: User
+  - name: Login
+  - name: Token
+paths:
+  /page:
+    get:
+      security:
+        - bearerAuth: []
+      summary: List of pages - nevypisovat content, text
+      tags: 
+        - Page
+      responses:
+            200:
+              description: success
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Page'
+    post:
+      security:
+        - bearerAuth: []
+      summary: Add page
+      tags: 
+        - Page
+      responses:
+        200:
+          description: success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Page'
+  /page/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get page by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      tags: 
+        - Page
+      responses:
+            200:
+              description: success
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Page'
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update page
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Page
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        404:
+          description: Page with specified id not found
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete page
+      tags:
+        - Page
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        204:
+          description: ok - deleted
+        404:
+          description: Page with specified id not found
+  /language:
+    get:
+      security:
+        - bearerAuth: []
+      summary: List of languages 
+      tags: 
+        - Language
+      responses: 
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /menu:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get all menus
+      tags:
+        - Menu
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Menu'
+    post:
+      security:
+        - bearerAuth: []
+      summary: Add new menu + submenus
+      tags: 
+        - Menu
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Menu'
+  /menu/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get one menu by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Menu
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Menu'
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update menu
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Menu
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Menu'
+        404:
+          description: Menu with specified id not found
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete menu / submenu
+      tags:
+        - Menu
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        204:
+          description: ok - deleted
+        404:
+          description: Menu with specified id not found
+  /section:
+    get:
+      security:
+        - bearerAuth: []
+      summary: List of sections - nevypisovat translace
+      tags:
+        - Section
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Section'
+    post:
+      security:
+        - bearerAuth: []
+      summary: Add section
+      tags:
+        - Section
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Section'              
+  /section/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get one section by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Section
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Section'
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update section
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      tags:
+        - Section
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Section'
+        404:
+          description: Section with specified id not found
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete section
+      tags:
+        - Section
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        204:
+          description: ok - deleted
+        404:
+          description: Section with specified id not found
+  /register:
+    post:
+      summary: register user
+      tags:
+      - User
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPublic'
+        422:
+          description: empty body || validation failed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+  /login_check:
+    post:
+      summary: login
+      tags:
+        - Login
+      responses:
+        204:
+          description: ok, token in cookies
+        401:
+          description: wrong email/password
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password: 
+                  type: string
+  /refresh/token:
+    post:
+      security:
+        - bearerAuth: []
+      summary: refresh token
+      tags: 
+        - Token
+      responses:
+        200:
+          description: ok
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token_refresh:
+                  type: string
+  /user/current:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Get current user
+      tags:
+        - User
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/{id}:
+    put:
+      security:
+        - bearerAuth: []
+      summary: update user
+      tags: 
+        - User
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UserPublic'
+        404:
+          description: User with specified id not found
+        422:
+          description: Empty body || validation failed
+      requestBody: 
+        description: roles are not necessary
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                roles:
+                  type: array
+                  items:
+                    type: string
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete user 
+      tags: 
+        - User
+      parameters: 
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses: 
+        204:
+          description: ok - deleted
+        404:
+          description: User with specified id not found
+components:
+  schemas:
+    Page:
+      type: object
+      properties:
+        id:
+          type: integer
+        title: 
+          type: string
+        template: 
+          type: string
+          default: default
+        translations:
+          description: 'Pole jazyků'
+          type: object
+          properties:
+            CZ:
+              $ref: '#/components/schemas/LanguageInfo'
+            EN:
+              $ref: '#/components/schemas/LanguageInfo'
+        enabled:
+          type: boolean
+    LanguageInfo:
+      type: object
+      properties:
+            id:
+              type: integer
+            title: 
+             type: string
+            introtext:
+             type: string
+            content: 
+              type: string
+            metadata:
+              type: string
+    Menu:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        menuItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuItem'
+    MenuItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        lft:
+          type: integer
+        rgt:
+          type: integer
+        depth:
+          type: integer
+        route:
+          type: integer
+        route_parameters:
+          type: integer
+        translations:
+          description: 'Pole jazyků'
+          type: object
+          properties:
+            CZ:
+              $ref: '#/components/schemas/MenuTranslation'
+            EN:
+              $ref: '#/components/schemas/MenuTranslation'
+        child:
+          type: array
+          items:
+            $ref: '#/components/schemas/MenuItem'
+    MenuTranslation:
+      type: object
+      properties:
+        name:
+          type: string
+        slug:
+          type: string
+    Section:
+      type: object
+      properties:
+        id:
+          type: integer
+        title: 
+          type: string
+        slug:
+          type: string
+        translations:
+          type: object
+          properties:
+            CZ:
+              $ref: '#/components/schemas/SectionTranslation'
+            EN:
+              $ref: '#/components/schemas/SectionTranslation'
+    SectionTranslation:
+      type: object
+      properties:
+        content:
+          type: string
+    UserPublic:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: integer
+        roles:
+          type: array
+          items: 
+            type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
