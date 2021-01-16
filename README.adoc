@@ -76,8 +76,7 @@ image::static/images/step-001-directory-structure.png[Directory Structure]
 The initial project we have created **ONLY** contains Vert.x Core. And while you can do a lot of impressive things with Vert.x Core, we are going to add some further Vert.x Modules to our `pom.xml`:
 
 .Maven POM Dependencies
-[pom.xml]
-====
+----
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -123,13 +122,12 @@ The initial project we have created **ONLY** contains Vert.x Core. And while you
             <artifactId>vertx-auth-oauth2</artifactId>
         </dependency>
     </dependencies>
-====
+----
 
 We can also add dependencies for Reactive Hibernate and Mutiny here as well.
 
 .Reactive Hibernate Dependencies
-[pom.xml]
-====
+----
     <dependency>
         <groupId>io.smallrye.reactive</groupId>
         <artifactId>mutiny</artifactId>
@@ -144,16 +142,15 @@ We can also add dependencies for Reactive Hibernate and Mutiny here as well.
         <artifactId>hibernate-reactive-core</artifactId>
         <version>1.0.0.Beta2</version>
     </dependency>
-====
+----
 
 Finally, we might want to add a logging library.
 
 .SLF4J Logging
-[pom.xml]
-====
+----
     <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-jdk14</artifactId>
         <version>1.7.30</version>
     </dependency>
-====
+----
