@@ -70,3 +70,90 @@ And you will end up with a directory structure like this:
 
 .Directory Structure
 image::static/images/step-001-directory-structure.png[Directory Structure]
+
+## Add Vert.x Modules
+
+The initial project we have created **ONLY** contains Vert.x Core. And while you can do a lot of impressive things with Vert.x Core, we are going to add some further Vert.x Modules to our `pom.xml`:
+
+.Maven POM Dependencies
+[pom.xml]
+====
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-stack-depchain</artifactId>
+                <version>${vertx.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-api-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web-openapi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-infinispan</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-auth-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-auth-oauth2</artifactId>
+        </dependency>
+    </dependencies>
+====
+
+We can also add dependencies for Reactive Hibernate and Mutiny here as well.
+
+.Reactive Hibernate Dependencies
+[pom.xml]
+====
+    <dependency>
+        <groupId>io.smallrye.reactive</groupId>
+        <artifactId>mutiny</artifactId>
+        <version>0.13.0</version>
+    </dependency>
+    <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-pg-client</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate.reactive</groupId>
+        <artifactId>hibernate-reactive-core</artifactId>
+        <version>1.0.0.Beta2</version>
+    </dependency>
+====
+
+Finally, we might want to add a logging library.
+
+.SLF4J Logging
+[pom.xml]
+====
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-jdk14</artifactId>
+        <version>1.7.30</version>
+    </dependency>
+====
